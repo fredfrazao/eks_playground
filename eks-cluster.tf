@@ -1,5 +1,5 @@
 locals {
-  cluster_name = "fred-k8s-${random_string.suffix.result}"
+  cluster_name = "Moon"
 }
 
 terraform {
@@ -47,10 +47,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
 }
 
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
 
 resource "aws_security_group" "worker_group_mgmt_one" {
   name_prefix = "worker_group_mgmt_one"

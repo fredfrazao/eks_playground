@@ -11,7 +11,7 @@ jobs:
   terraform:
     name: 'Deploy eks'
     runs-on: ubuntu-latest
-    environment: test
+    environment: dev
 
     defaults:
       run:

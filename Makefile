@@ -16,14 +16,13 @@ tf-ns-delete:  ##  Terraform  delete ns
 tf-validate:  ##  Terraform and validate
 	 terraform validate
 
-tf-plan:  ## Generate Plan
-	 terraform plan -out tfplan
+tf-plan:  tf-validate ## Generate Plan
+	 terraform plan -input=false
 
 setup-eks-cluster: tf-ns-create init-terraform tf-plan ## Setup eks cluster
-	 terraform apply "tfplan"
+	 terraform apply -auto-approve -input=false
 
-destroy-eks-cluster:  ## destroy eks cluster
-	terraform init
+destroy-eks-cluster: init-terraform  ## destroy eks cluster
 	terraform destroy -auto-approve
 
 cleanup: destroy-eks-cluster tf-ns-delete ## cleanup

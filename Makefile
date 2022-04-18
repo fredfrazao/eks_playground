@@ -19,7 +19,7 @@ tf-validate:  ##  Terraform and validate
 tf-plan:  tf-validate ## Generate Plan
 	 terraform plan -input=false
 
-setup-eks-cluster: tf-ns-create init-terraform tf-plan ## Setup eks cluster
+setup-eks-cluster:  init-terraform tf-plan ## Setup eks cluster
 	 terraform apply -auto-approve -input=false
 
 destroy-eks-cluster: init-terraform  ## destroy eks cluster

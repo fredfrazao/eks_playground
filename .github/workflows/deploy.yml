@@ -27,11 +27,6 @@ jobs:
         terraform_version: 1.1.8
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
         
-    - name: Terraform Init
-      run: terraform init
-  
-    - name: Terraform Plan
-      run: terraform plan -input=false
+    - name: setup-eks-cluster
+      run: make setup-eks-cluster
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false

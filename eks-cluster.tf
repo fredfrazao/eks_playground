@@ -1,8 +1,10 @@
-locals {
-  cluster_name = "Moon"
-}
-
 terraform {
+  cloud {
+    organization = "suxsox"
+    workspaces {
+      name = "dev"
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -33,8 +35,9 @@ terraform {
   required_version = ">= 0.14"
 }
 
+
 variable "region" {
-  default     = "eu-west-2"
+  default     = "us-east-2"
   description = "AWS region"
 }
 
@@ -47,6 +50,17 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
 }
 
+
+data "aws_availability_zones" "available" {}
+
+locals {
+  cluster_name = "frazao-eks-${random_string.suffix.result}"
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+}
 
 resource "aws_security_group" "worker_group_mgmt_one" {
   name_prefix = "worker_group_mgmt_one"
@@ -149,7 +163,7 @@ module "eks" {
     {
       name                          = "worker-group-2"
       instance_type                 = "t2.small"
-      additional_userdata           = "Dev2"
+      additional_userdata           = "dev2"
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
       asg_desired_capacity          = 1
     },
@@ -163,4 +177,3 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
-data "aws_availability_zones" "available" {}

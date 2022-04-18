@@ -1,4 +1,4 @@
-
+[![ci-Terraform](https://github.com/fredfrazao/eks_playground/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fredfrazao/eks_playground/actions/workflows/ci.yml)
 
 # Prerequisites
 ```

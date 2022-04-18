@@ -1,17 +1,15 @@
-name: 'ci-Terraform' 
+name: 'Deploy eks' 
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
+on: 
+  workflow_dispatch:
+
 
 permissions:
   contents: read
 
 jobs:
   terraform:
-    name: 'Ci Terraform'
+    name: 'Deploy eks'
     runs-on: ubuntu-latest
     environment: dev
 
@@ -37,6 +35,3 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
-
-    - name: Terraform destroy
-      run: terraform destroy -auto-approve

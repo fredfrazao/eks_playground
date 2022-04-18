@@ -1,17 +1,15 @@
-name: 'ci-Terraform' 
+name: 'destroy eks' 
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
+on: 
+  workflow_dispatch:
+
 
 permissions:
   contents: read
 
 jobs:
   terraform:
-    name: 'Ci Terraform'
+    name: 'destroy eks'
     runs-on: ubuntu-latest
     environment: dev
 
@@ -32,11 +30,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
   
-    - name: Terraform Plan
-      run: terraform plan -input=false
-
-    - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false
 
     - name: Terraform destroy
       run: terraform destroy -auto-approve

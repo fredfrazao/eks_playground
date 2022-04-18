@@ -5,6 +5,7 @@
 - a AWS account 
 - a configured AWS CLI
 - AWS IAM Authenticator
+- terraform cloud account for the backend and the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in the workspace env.
 - terraform >= 0.14
 - kubectl to interact with the elk 
 ```
@@ -34,4 +35,9 @@ aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terr
 # Destroy an EKS Cluster
 ```
 make destroy-eks-cluster
+```
+
+# GitHub Actions Prerequisites
+```
+- terraform cloud account for the backend and the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in the workspace env.
 ```

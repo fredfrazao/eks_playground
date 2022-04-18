@@ -1,0 +1,37 @@
+name: 'Deploy eks' 
+
+on: 
+  workflow_dispatch:
+
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Deploy eks'
+    runs-on: ubuntu-latest
+    environment: test
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.1.8
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        
+    - name: Terraform Init
+      run: terraform init
+  
+    - name: Terraform Plan
+      run: terraform plan -input=false
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false

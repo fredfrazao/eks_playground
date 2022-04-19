@@ -1,0 +1,25 @@
+---
+
+
+- name: Install  Components
+  hosts: localhost
+  gather_facts: false
+  any_errors_fatal: true
+
+  roles:
+    - role: mgmt/pre
+      tags:
+        - setup_pre
+    - role: monitoring/prometheus_operator
+      tags:
+        - setup_prometheus_operator
+    - role: mgmt/argocd
+      tags:
+        - setup_argocd
+    - role: mgmt/consul
+      tags:
+        - setup_consul
+
+  tags:
+    - setup_components
+

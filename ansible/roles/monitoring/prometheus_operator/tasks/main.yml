@@ -1,0 +1,22 @@
+---
+- name: Create the namespace monitoring
+  community.kubernetes.k8s:
+    kubeconfig: "{{ kubeconfig_file }}"
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: monitoring
+
+
+- name: prometheus operator chart
+  community.kubernetes.helm:
+    atomic: true
+    chart_repo_url: https://charts.bitnami.com/bitnami
+    kubeconfig: "{{ kubeconfig_file }}"
+    namespace: monitoring
+    name: prometheus-operator
+    chart_ref: kube-prometheus
+    chart_version: 6.3.0
+    wait_timeout: 10m

@@ -2,7 +2,7 @@ terraform {
   cloud {
     organization = "suxsox"
     workspaces {
-      name = "dev"
+      name = "prod"
     }
   }
   required_providers {
@@ -37,7 +37,7 @@ terraform {
 
 
 variable "region" {
-  default     = "us-east-2"
+  default     = "eu-west-2"
   description = "AWS region"
 }
 
@@ -54,7 +54,7 @@ provider "kubernetes" {
 data "aws_availability_zones" "available" {}
 
 locals {
-  cluster_name = "frazao-eks-${random_string.suffix.result}"
+  cluster_name = "frazao"
 }
 
 resource "random_string" "suffix" {

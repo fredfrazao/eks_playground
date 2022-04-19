@@ -1,4 +1,4 @@
-name: 'ci-Terraform' 
+name: 'ci'
 
 on:
   push:
@@ -11,9 +11,9 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Ci Terraform'
+    name: 'Ci'
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ci
 
     defaults:
       run:
@@ -31,7 +31,10 @@ jobs:
         
     - name: Terraform Init
       run: make init-terraform
-  
+
+    - name: ci-terraform-confi
+      run: make ci-terraform-configs
+
     - name: Terraform Plan
       run: make tf-plan
 

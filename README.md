@@ -41,11 +41,19 @@ make destroy-eks-cluster
 - terraform cloud account for the backend and the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in the workspace env.
 ```
 # Additional components
-[Consul](https://artifacthub.io/packages/helm/bitnami/consul)
 
-[kube-prometheus](https://artifacthub.io/packages/helm/bitnami/kube-prometheus)
+| chart_version | components          |
+| ------- | ------------------ |
+| 10.3.7  | [Consul](https://artifacthub.io/packages/helm/bitnami/consul)|
+| 6.3.0  | [kube-prometheus](https://artifacthub.io/packages/helm/bitnami/kube-prometheus)|
+| 2.3.6  | [grafana-operator](https://artifacthub.io/packages/helm/bitnami/grafana-operator) |
+| 3.1.12  | [ArgoCD](https://artifacthub.io/packages/helm/bitnami/argo-cd) |
 
-[grafana-operator](https://artifacthub.io/packages/helm/bitnami/grafana-operator)
 
-[ArgoCD](https://artifacthub.io/packages/helm/bitnami/argo-cd) 
+
+
+
+
+
+
 

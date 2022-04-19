@@ -17,7 +17,7 @@ tf-ns-delete:  ##  Terraform  delete ns
 tf-validate:  ##  Terraform and validate
 	 terraform validate
 
-tf-plan:  tf-validate ## Generate Plan
+tf-plan:  init-terraform tf-validate ## Generate Plan
 	 terraform plan -input=false
 
 setup-eks-cluster:  init-terraform tf-plan ## Setup eks cluster

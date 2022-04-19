@@ -1,0 +1,22 @@
+---
+- name: Create the namespace argocd
+  community.kubernetes.k8s:
+    kubeconfig: "{{ kubeconfig_file }}"
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: argocd
+
+- name: argo-cd chart
+  community.kubernetes.helm:
+    atomic: true
+    chart_repo_url: https://charts.bitnami.com/bitnami
+    kubeconfig: "{{ kubeconfig_file }}"
+    namespace: argocd
+    name: argo-cd
+    chart_ref: argo-cd
+    chart_version: 3.1.12
+    wait_timeout: 10m
+

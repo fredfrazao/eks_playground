@@ -1,0 +1,22 @@
+---
+- name: Create the namespace consul
+  community.kubernetes.k8s:
+    kubeconfig: "{{ kubeconfig_file }}"
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: consul
+
+- name: consulchart
+  community.kubernetes.helm:
+    atomic: true
+    chart_repo_url: https://charts.bitnami.com/bitnami
+    kubeconfig: "{{ kubeconfig_file }}"
+    namespace: consul
+    name: consul
+    chart_ref: consul
+    chart_version: 10.3.7
+    wait_timeout: 10m
+

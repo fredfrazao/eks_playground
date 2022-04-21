@@ -1,0 +1,50 @@
+name: 'Deploy Cluster'
+
+on:
+  workflow_dispatch:
+    inputs:
+      cluster:
+        description: 'Cluster: atlas, maia, zeus, sirius'
+        required: true
+        default: 'maia'
+      clusterenv:
+        description: 'ENV: ci, dev or prod'
+        required: true
+        default: 'dev'
+
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Deploy cluster'
+    runs-on: ubuntu-latest
+    environment:  ${{ github.event.inputs.clusterenv }}
+
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: get vars
+      run: make get-vars  CLUSTER=${{ github.event.inputs.cluster }} ENV=${{ github.event.inputs.clusterenv }}
+
+    - name: set-terraform-cluster-configs
+      run: make terraform-configs  CLUSTER=${{ github.event.inputs.cluster }} ENV=${{ github.event.inputs.clusterenv }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.1.8
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: setup-eks-cluster
+      run: make setup-eks-cluster CLUSTER=${{ github.event.inputs.cluster }} ENV=${{ github.event.inputs.clusterenv }}
+
+    - name: Terraform destroy
+      run: make destroy-eks-cluster CLUSTER=${{ github.event.inputs.cluster }} ENV=${{ github.event.inputs.clusterenv }}

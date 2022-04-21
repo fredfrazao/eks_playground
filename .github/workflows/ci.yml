@@ -1,10 +1,16 @@
 name: 'ci'
 
 on:
-  push:
-    branches:
-    - main
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      cluster:
+        description: 'Cluster: atlas, maia'
+        required: true
+        default: 'atlas'
+      clusterenv:
+        description: 'ENV: ci, dev or prod'
+        required: true
+        default: 'ci'
 
 permissions:
   contents: read
@@ -23,6 +29,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: ci-terraform-confi
+      run: make ci-terraform-configs CLUSTER=${{ github.event.inputs.cluster }} ENV=ci
+
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
@@ -30,13 +40,13 @@ jobs:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
         
     - name: Terraform Init
-      run: make init-terraform
+      run: make init-terraform CLUSTER=${{ github.event.inputs.cluster }} ENV=ci
 
-    - name: ci-terraform-confi
-      run: make ci-terraform-configs
+    - name: Terraform Plan
+      run: make tf-plan CLUSTER=${{ github.event.inputs.cluster }} ENV=ci
 
-    - name: Terraform Setup EKS
-      run: make setup-eks-cluster
+    - name: Terraform Apply
+      run: make setup-eks-cluster CLUSTER=${{ github.event.inputs.cluster }} ENV=ci
 
-    - name: Terraform destroy EKS
-      run: make destroy-eks-cluster
+    - name: Terraform destroy
+      run: make destroy-eks-cluster CLUSTER=${{ github.event.inputs.cluster }}

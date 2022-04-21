@@ -45,6 +45,3 @@ jobs:
 
     - name: setup-eks-cluster
       run: make setup-eks-cluster CLUSTER=${{ github.event.inputs.cluster }} ENV=${{ github.event.inputs.clusterenv }}
-
-    - name: Terraform destroy
-      run: make destroy-eks-cluster CLUSTER=${{ github.event.inputs.cluster }} ENV=${{ github.event.inputs.clusterenv }}
